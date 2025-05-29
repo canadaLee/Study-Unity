@@ -3,29 +3,18 @@ using UnityEngine;
 public class Transform_LoopMap : MonoBehaviour
 {
     public float moveSpeed = 3f;
-
-    SpriteRenderer spriteRenderer;
-
-    public Vector3 returnPos;
-
-    private void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+    public float returnPosX = 15f;
+    public float randomPosY;
 
     void Update()
     {
-        ////배경을 왼쪽으로 이동하는 기능
         transform.position += Vector3.left * moveSpeed * Time.deltaTime;
 
-        if (transform.position.x <= -returnPos.x *1.5f)
+        if (transform.position.x <= -returnPosX)
         {
-            transform.position = returnPos;
-        }
+            randomPosY = Random.Range(-8f, -2.5f);
 
-        //if (transform.position.x <= -spriteRenderer.size.x)
-        //{
-        //    transform.Translate((spriteRenderer.size.x * 2) * Vector3.right);
-        //}
+            transform.position = new Vector3(returnPosX, randomPosY, 1);
+        }
     }
 }
