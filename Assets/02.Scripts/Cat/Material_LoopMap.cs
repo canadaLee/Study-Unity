@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Material_LoopMap : MonoBehaviour
 {
-    private MeshRenderer renderer;
+    private new MeshRenderer renderer;
 
     public float offsetSpeed = 0.1f;
 
