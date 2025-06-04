@@ -58,29 +58,61 @@ public class CharacterMovement : MonoBehaviour
     }
     public void Move()
     {
-        if (h != 0)
-        {
-            //물리적인 이동 linearVelocity == 서서히 감속이되며 0 이 되므로 살짝 반응이 느린 느낌을 준다.
+        //if (h != 0)
+        //{
+        //    //물리적인 이동 linearVelocity == 서서히 감속이되며 0 이 되므로 살짝 반응이 느린 느낌을 준다.
 
+        //    if (isGround)
+        //    {
+        //        renderers[0].gameObject.SetActive(false);
+        //        renderers[1].gameObject.SetActive(true);
+
+        //        rb.linearVelocityX = h * moveSpeed;
+
+        //    }
+        //    else
+        //    {
+        //        renderers[0].gameObject.SetActive(false);
+        //        renderers[1].gameObject.SetActive(false);
+        //    }
+        //    Filp();
+        //}      
+        //else
+        //{
+        //    renderers[0].gameObject.SetActive(true);
+        //    renderers[1].gameObject.SetActive(false);
+        //}
+
+
+        if (h != 0) // 입력 키를 누를 때
+        {
             if (isGround)
             {
-                renderers[0].gameObject.SetActive(false);
-                renderers[1].gameObject.SetActive(true);
-
-                rb.linearVelocityX = h * moveSpeed;
-
+                renderers[0].gameObject.SetActive(false); // Idle
+                renderers[1].gameObject.SetActive(true); // Run
             }
             else
             {
-                renderers[0].gameObject.SetActive(false);
-                renderers[1].gameObject.SetActive(false);
+                renderers[0].gameObject.SetActive(false); // Idle
+                renderers[1].gameObject.SetActive(false); // Run
             }
+
+            rb.linearVelocityX = h * moveSpeed; // 물리적인 이동
+
             Filp();
-        }      
-        else
+        }
+        else if (h == 0)// 입력 키를 누르지 않을 때
         {
-            renderers[0].gameObject.SetActive(true);
-            renderers[1].gameObject.SetActive(false);
+            if (isGround)
+            {
+                renderers[0].gameObject.SetActive(true); // Idle
+                renderers[1].gameObject.SetActive(false); // Run
+            }
+            else
+            {
+                renderers[0].gameObject.SetActive(false); // Idle
+                renderers[1].gameObject.SetActive(false); // Run
+            }
         }
     }
 
