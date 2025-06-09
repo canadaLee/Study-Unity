@@ -34,7 +34,11 @@ public class Cat_Controller : MonoBehaviour
 
             if (rb.linearVelocityY > limitPower) // 자연스러운 점프를 위한 속도 제한
                 rb.linearVelocityY = limitPower;
+
         }
+        var catRotation = transform.eulerAngles;
+        catRotation.z = rb.linearVelocityY * 2.5f;
+        transform.eulerAngles = catRotation;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
