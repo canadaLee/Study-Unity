@@ -2,9 +2,18 @@ using UnityEngine;
 
 public class Transform_LoopMap : MonoBehaviour
 {
+    
+
     public float moveSpeed = 3f;
     public float returnPosX = 15f;
     public float randomPosY;
+
+
+    private void Start()
+    {
+        randomPosY = Random.Range(-8, -3);
+        transform.position = new Vector3(transform.position.x, randomPosY, 0);
+    }
 
     void Update()
     {

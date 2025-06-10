@@ -8,6 +8,7 @@ namespace Cat
     {
         public GameObject intro;
         public GameObject inGame;
+        public GameObject playUI;
 
         public TMP_InputField catName_InputField;
         public TextMeshProUGUI cat_Name;
@@ -31,7 +32,9 @@ namespace Cat
             {
                 intro.SetActive(false);
                 inGame.SetActive(true);
+                playUI.SetActive(true);
                 cat_Name.text = catName_InputField.text;
+                GameManager.isPlay = true;
             }
         }
 

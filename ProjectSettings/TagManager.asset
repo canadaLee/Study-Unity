@@ -9,6 +9,8 @@ TagManager:
   - Score30
   - Score50
   - GameOver
+  - Cherrie
+  - Pipe
   layers:
   - Default
   - TransparentFX

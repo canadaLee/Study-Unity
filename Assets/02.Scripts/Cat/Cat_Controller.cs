@@ -4,15 +4,21 @@ public class Cat_Controller : MonoBehaviour
 {
     public SoundManager soundManager;
 
+    public GameObject gameOverUI;
+    public GameObject fadeUI;
+
+    public GameObject happy_video;
+    public GameObject sad_video;
+
     public float jumpPower = 10f;
-    public bool isGround = false;
 
     public int jumpCount = 0;
 
     private Rigidbody2D rb;
     private Animator anim;
     private float limitPower = 20f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,20 +46,57 @@ public class Cat_Controller : MonoBehaviour
         catRotation.z = rb.linearVelocityY * 2.5f;
         transform.eulerAngles = catRotation;
     }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Cherrie"))
+        {
+            col.gameObject.SetActive(false);
+            col.transform.parent.GetComponent<Item_Events>().particle.SetActive(true);
+            GameManager.score += 1;
 
+            if(GameManager.score ==10)
+            {
+                fadeUI.SetActive(true);
+                fadeUI.GetComponent<FadeRoutine>().OnFade(1f, Color.white);
+
+                Invoke("HappVideo", 3f);
+            }
+        }
+    }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.CompareTag("Ground"))
+        if (col.gameObject.CompareTag("Pipe"))
+        {
+            soundManager.OnColliderSound();
+
+            gameOverUI.SetActive(true);
+            fadeUI.SetActive(true);
+            fadeUI.GetComponent<FadeRoutine>().OnFade(1f, Color.black);
+
+            Invoke("SadVideo", 3f);
+        }
+
+        if (col.gameObject.CompareTag("Ground"))
         {
             anim.SetBool("IsGround",true);
             jumpCount = 0;
-            isGround = true;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D col)
+    public void HappyVideo()
     {
-        if (col.gameObject.CompareTag("Ground"))
-            isGround = false;
+        happy_video.SetActive(true);
+        fadeUI.SetActive(false);
+        gameOverUI.SetActive(false);
+
+        soundManager.audioSource.mute = true;
+    }
+    public void SadVideo()
+    {
+        sad_video.SetActive(true);
+        fadeUI.SetActive(false);
+        gameOverUI.SetActive(false);
+
+        soundManager.audioSource.mute = true;
     }
 }

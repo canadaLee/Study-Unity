@@ -7,6 +7,7 @@ namespace Cat
         public AudioSource audioSource;
         public AudioClip bgmClip;
         public AudioClip jumpClip;
+        public AudioClip colliderClip;
 
 
         private void Start()
@@ -27,6 +28,11 @@ namespace Cat
         public void OnJumpSound()
         {
             audioSource.PlayOneShot(jumpClip);
+        }
+
+        public void OnColliderSound()
+        {
+            audioSource.PlayOneShot(colliderClip);
         }
     }
 }
