@@ -1,14 +1,15 @@
 using UnityEngine;
 using Cat;
+using System.Collections;
+
 public class Cat_Controller : MonoBehaviour
 {
     public SoundManager soundManager;
+    public VideoManager videoManager;
 
     public GameObject gameOverUI;
     public GameObject fadeUI;
 
-    public GameObject happy_video;
-    public GameObject sad_video;
 
     public float jumpPower = 10f;
 
@@ -59,7 +60,8 @@ public class Cat_Controller : MonoBehaviour
                 fadeUI.SetActive(true);
                 fadeUI.GetComponent<FadeRoutine>().OnFade(1f, Color.white);
 
-                Invoke("HappVideo", 3f);
+                //Invoke("HappVideo", 3f);
+                StartCoroutine(EndingRoutine(true));
             }
         }
     }
@@ -73,7 +75,8 @@ public class Cat_Controller : MonoBehaviour
             fadeUI.SetActive(true);
             fadeUI.GetComponent<FadeRoutine>().OnFade(1f, Color.black);
 
-            Invoke("SadVideo", 3f);
+            // Invoke("SadVideo", 3f);
+            StartCoroutine(EndingRoutine(false));
         }
 
         if (col.gameObject.CompareTag("Ground"))
@@ -83,9 +86,23 @@ public class Cat_Controller : MonoBehaviour
         }
     }
 
+    IEnumerator EndingRoutine(bool isHappy)
+    {
+        yield return new WaitForSeconds(3.0f); 
+        videoManager.VideoPlay(isHappy);
+
+        //yield return new WaitUntil(() => videoManager.videoPlayer.isPlaying);
+
+        fadeUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        soundManager.audioSource.mute = true;
+
+    }
+
     public void HappyVideo()
     {
-        happy_video.SetActive(true);
+        videoManager.VideoPlay(true);
+
         fadeUI.SetActive(false);
         gameOverUI.SetActive(false);
 
@@ -93,7 +110,8 @@ public class Cat_Controller : MonoBehaviour
     }
     public void SadVideo()
     {
-        sad_video.SetActive(true);
+        videoManager.VideoPlay(true);
+
         fadeUI.SetActive(false);
         gameOverUI.SetActive(false);
 
